@@ -2,7 +2,7 @@
 @if(auth()->user()->hasRole('kasir'))
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Minimarket Pak Jayusman') }}
+            {{ __('Minimarket Pak Jayusman') }}{{' '}}{{$cabangStoks->first()->cabang->nama}}
         </h2>
     </x-slot>
 
@@ -20,15 +20,16 @@
                                 <th scope="col">Aksi</th>
                             </tr>
                         </x-slot>
-                        @foreach ($produks as $produk)
+                        @foreach ($cabangStoks as $cabangs)
                         <tr>
-                            <td>{{$produk->id}}</td>
-                            <td>{{$produk->nama}}</td>
-                            <td>{{$produk->harga}}</td>
+                            <td>{{$cabangs->produk->id}}</td>
+                            <td>{{$cabangs->produk->nama}}</td>
+                            <td>{{$cabangs->produk->harga }}</td>
                             <td>
                                 <form action="{{ route('transaksi.store') }}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="produk_id" value="{{ $produk->id }}">
+                                    <input type="hidden" name="cabang_id" value="{{ $cabangs->cabang->id }}">
+                                    <input type="hidden" name="produk_id" value="{{ $cabangs->produk->id }}">
                                     <input type="number" name="jumlah" value="1" min="1" required>
                                     <x-primary-button type="submit" class="btn btn-primary">Tambah</x-primary-button>
                                 </form>

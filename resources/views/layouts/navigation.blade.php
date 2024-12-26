@@ -27,18 +27,18 @@
                     </x-nav-link>
                     @endhasrole
                     @hasrole('manager')
-                    <x-nav-link :href="route('cabang.index')" :active="request()->routeIs('cabang.index')">
+                    <x-nav-link :href="route('transaksi.index')" :active="request()->routeIs('transaksi.index')">
                         {{ __('Transaksi') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('cabang.index')" :active="request()->routeIs('cabang.index')">
+                    <x-nav-link :href="route('cabang.stok')" :active="request()->routeIs('cabang.stok')">
                         {{ __('Stok') }}
                     </x-nav-link>
                     @endhasrole
                     @hasrole('supervisor')
-                    <x-nav-link :href="route('cabang.index')" :active="request()->routeIs('cabang.index')">
+                    <x-nav-link :href="route('transaksi.index')" :active="request()->routeIs('transaksi.index')">
                         {{ __('Data Transaksi') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('cabang.index')" :active="request()->routeIs('cabang.index')">
+                    <x-nav-link :href="route('cabang.stok')" :active="request()->routeIs('cabang.stok')">
                         {{ __('Data Stok') }}
                     </x-nav-link>
                     @endhasrole
@@ -46,9 +46,12 @@
                     <x-nav-link :href="route('transaksi.index')" :active="request()->routeIs('transaksi.index')">
                         {{ __('Pembelian') }}
                     </x-nav-link>
-
                     @endhasrole
-
+                    @hasrole('pegawai')
+                    <x-nav-link :href="route('gudang.index')" :active="request()->routeIs('gudang.index')">
+                        {{ __('Pengadaan Stok') }}
+                    </x-nav-link>
+                    @endhasrole
 
                 </div>
             </div>

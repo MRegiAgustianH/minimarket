@@ -15,8 +15,21 @@ class TransaksiController extends Controller
     public function index()
     {
         //
-        $data ['transaksis'] = Transaksi::all();
-        return view('transaksi.index', $data);
+        $user = Auth::user(); // Mendapatkan user yang sedang login
+
+        // Memeriksa apakah user memiliki role supervisor
+        if ($user->hasRole('supervisor')) {
+            // Ambil semua transaksi untuk cabang yang dikelola oleh supervisor
+            $transaksis = Transaksi::where('cabang_id', $user->cabang_id)->get();
+        } elseif ($user->hasRole('kasir')) {
+            // Ambil transaksi berdasarkan cabang yang dipegang oleh kasir
+            $transaksis = Transaksi::where('cabang_id', $user->cabang_id)->get();
+        } else {
+            // Jika bukan supervisor atau kasir, ambil semua transaksi
+            $transaksis = Transaksi::all();
+        }
+
+        return view('transaksi.index', ['transaksis' => $transaksis]);
     }
 
     /**
@@ -44,6 +57,7 @@ class TransaksiController extends Controller
         $total_harga = $produk->harga * $request->jumlah;
  
         Transaksi::create([
+            'cabang_id' => $request->cabang_id,
             'produk_id' => $request->produk_id,
             'jumlah' => $request->jumlah,
             'user_id' => Auth::id(), 

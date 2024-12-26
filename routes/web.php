@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\CabangController;
+use App\Http\Controllers\CabangStokController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use App\Models\Cabang;
+use App\Models\CabangStok;
 use App\Models\Produk;
 use App\Models\User;
 use GuzzleHttp\Middleware;
@@ -17,8 +19,20 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $data ['produks'] = Produk::all();
-    return view('dashboard',$data);
+    $user = Auth::user(); // Mendapatkan user yang sedang login
+
+    // Memeriksa apakah user memiliki role kasir
+    if ($user->hasRole('kasir')) {
+        // Mengambil stok produk berdasarkan cabang yang dipegang oleh kasir
+        $cabangStoks = CabangStok::with('produk')
+            ->where('cabang_id', $user->cabang_id) // Mengambil stok berdasarkan cabang user
+            ->get();
+    } else {
+        // Jika bukan kasir, ambil semua produk
+        $cabangStoks = CabangStok::with('produk')->get();
+    }
+
+    return view('dashboard', ['cabangStoks' => $cabangStoks]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -48,11 +62,26 @@ Route::group(['middleware' => ['role:owner']], function () {
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
 });
 
-Route::group(['middleware'=> ['role:kasir']],function(){
+Route::group(['middleware'=> ['role:supervisor']],function(){
+    Route::get('/cabang/stok',[CabangStokController::class,'index'])->name('cabang.stok');
+    Route::post('/cabang/stok', [CabangStokController::class, 'create'])->name('cabang.stok');
+    Route::get('/transaksi',[TransaksiController::class,'index'])->name('transaksi.index');
+});
 
+
+Route::group(['middleware'=> ['role:kasir']],function(){
     Route::get('/transaksi',[TransaksiController::class,'index'])->name('transaksi.index');
     Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
+});
 
+Route::group(['middleware' => ['role:supervisor|kasir|manager|owner|pegawai']], function() {
+    Route::get('/cabang/stok', [CabangStokController::class, 'index'])->name('cabang.stok');
+    Route::post('/cabang/stok', [CabangStokController::class, 'create'])->name('cabang.stok');
+    Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+    
+});
+Route::group(['middleware'=> ['role:pegawai']],function(){
+    Route::get('/gudang',[CabangStokController::class,'index'])->name('gudang.index');
 });
 
 

@@ -11,6 +11,7 @@ class Transaksi extends Model
 
     // Kolom yang dapat diisi secara massal
     protected $fillable = [
+        'cabang_id',
         'user_id',
         'produk_id',
         'jumlah',
@@ -23,6 +24,10 @@ class Transaksi extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function cabang(){
+        return $this->belongsTo(Cabang::class);
     }
 
     // Menentukan relasi dengan model Item (jika ada)

@@ -14,7 +14,8 @@ class LaporanController extends Controller
     public function index()
     {
         //
-        return view('laporan.index');
+        $transaksiBulanan = Transaksi::whereMonth('created_at', now()->month)->get();
+        return view('laporan.index', $transaksiBulanan);
     }
 
     public function transaksi(){
@@ -28,7 +29,7 @@ class LaporanController extends Controller
 
     public function laporanTransaksi(Request $request)
     {
-        // Mengambil laporan transaksi
+        
         $transaksis = Transaksi::all();
         $transaksiHarian = Transaksi::whereDate('created_at', today())->get();
         $transaksiBulanan = Transaksi::whereMonth('created_at', now()->month)->get();
@@ -39,7 +40,7 @@ class LaporanController extends Controller
 
     public function laporanStok(Request $request)
     {
-        // Mengambil laporan stok
+        
         $stokHarian = CabangStok::whereDate('updated_at', today())->get();
         $stokBulanan = CabangStok::whereMonth('updated_at', now()->month)->get();
         $stokTahunan = CabangStok::whereYear('updated_at', now()->year)->get();

@@ -9,7 +9,7 @@ class Transaksi extends Model
     //
     protected $table = 'transaksis';
 
-    // Kolom yang dapat diisi secara massal
+    
     protected $fillable = [
         'cabang_id',
         'user_id',
@@ -20,7 +20,7 @@ class Transaksi extends Model
         'updated_at',
     ];
 
-    // Menentukan relasi dengan model User
+    
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -30,15 +30,15 @@ class Transaksi extends Model
         return $this->belongsTo(Cabang::class);
     }
 
-    // Menentukan relasi dengan model Item (jika ada)
+
     public function produk()
     {
         return $this->belongsTo(Produk::class);
     }
 
-    // Metode untuk menghitung total transaksi
+    
     public function calculateTotal()
     {
-        // Logika untuk menghitung total transaksi
+        
     }
 }

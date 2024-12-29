@@ -19,6 +19,7 @@
                                 <th scope="col">Nama Produk</th>
                                 <th scope="col">Total Harga</th>
                                 <th scope="col">Tanggal Transaksi</th>
+
                             </tr>
                         </x-slot>
                         @foreach ($transaksis as $transaksi)
@@ -55,6 +56,7 @@
                             <tr class="py-10">
                                 <th scope="col">ID</th>
                                 <th scope="col">Nama Produk</th>
+                                <th scope="col">Jumlah</th>
                                 <th scope="col">Harga</th>
                                 <th scope="col">Aksi</th>
                             </tr>
@@ -63,6 +65,7 @@
                         <tr>
                             <td>{{$transaksi->id}}</td>
                             <td>{{$transaksi->produk->nama}}</td>
+                            <td>{{$transaksi->jumlah}}</td>
                             <td>{{$transaksi->total_harga}}</td>
                         </tr>
                         @endforeach
@@ -91,14 +94,16 @@
                             <tr class="py-10">
                                 <th scope="col">ID</th>
                                 <th scope="col">Nama Produk</th>
+                                <th scope="col">Jumlah</th>
                                 <th scope="col">Harga</th>
-                                <th scope="col">Aksi</th>
+                                
                             </tr>
                         </x-slot>
                         @foreach ($transaksis as $transaksi)
                         <tr>
                             <td>{{$transaksi->id}}</td>
                             <td>{{$transaksi->produk->nama}}</td>
+                            <td>{{$transaksi->jumlah}}</td>
                             <td>{{$transaksi->total_harga}}</td>
                         </tr>
                         @endforeach

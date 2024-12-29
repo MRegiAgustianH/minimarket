@@ -24,7 +24,7 @@ class CabangStokSeeder extends Seeder
                 CabangStok::create([
                     'cabang_id' => $cabang->id,
                     'produk_id' => $produk->id,
-                    'jumlah' => rand(1, 100), // Mengisi jumlah stok secara acak
+                    'jumlah' => rand(1, 100), 
                 ]);
             }
         }

@@ -19,30 +19,22 @@ class CabangStokController extends Controller
         $user = Auth::user(); 
 
         if ($user) {
-            // Memeriksa apakah user memiliki role supervisor
+            
             if ($user->hasRole('supervisor')) {
-                // Ambil stok produk hanya untuk cabang yang dikelola oleh supervisor
                 $cabangStoks = CabangStok::with(['cabang', 'produk'])
                     ->where('cabang_id', $user->cabang_id) 
                     ->get();
             } elseif ($user->hasRole('manager')) {
-                // Ambil semua stok produk untuk manager
                 $cabangStoks = CabangStok::with(['cabang', 'produk'])->get();
             } elseif ($user->hasRole('pegawai')) {
-                // Ambil semua stok produk untuk pegawai
                 $cabangStoks = CabangStok::with(['cabang', 'produk'])->get();
-                // Arahkan ke view gudang.index
                 return view('gudang.index', compact('cabangStoks'));
             } else {
-                // Jika bukan supervisor, manager, atau pegawai, ambil koleksi kosong
                 $cabangStoks = collect();
             }
         } else {
-            // Jika tidak ada user yang terautentikasi
             $cabangStoks = collect(); 
         }
-
-        // Jika user bukan pegawai, kembalikan ke view cabang.stok
         return view('cabang.stok', compact('cabangStoks'));
     }
 

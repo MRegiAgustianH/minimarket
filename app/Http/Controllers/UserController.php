@@ -113,9 +113,9 @@ class UserController extends Controller
             'cabang_id' => 'required_if:role,supervisor|exists:cabangs,id',
         ]);
 
-        // Cek jika role adalah supervisor
+        
         if ($request->role === 'supervisor' && $user->role->name !== 'supervisor') {
-            // Cek apakah sudah ada supervisor yang bertanggung jawab atas cabang ini
+            
             $existingSupervisor = User::where('cabang_id', $request->cabang_id)
                 ->whereHas('role', function($query) {
                     $query->where('name', 'supervisor');
@@ -130,10 +130,10 @@ class UserController extends Controller
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
-            'cabang_id' => $request->cabang_id, // Pastikan cabang_id diperbarui
+            'cabang_id' => $request->cabang_id, 
         ]);
 
-        // Jika role diubah, assign role baru
+        
         if ($user->role->name !== $request->role) {
             $user->syncRoles($request->role);
         }

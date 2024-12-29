@@ -44,30 +44,30 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi input
+        
         $request->validate([
             'cabang_id' => 'required|exists:cabangs,id',
             'produk_id' => 'required|exists:produks,id',
             'jumlah' => 'required|integer|min:1',
         ]);
 
-        // Mencari produk berdasarkan ID
+        
         $produk = Produk::find($request->produk_id);
 
-        // Menghitung total harga
+        
         $total_harga = $produk->harga * $request->jumlah;
 
-        // Mencari stok cabang untuk produk yang dipilih
+        
         $cabangStok = CabangStok::where('cabang_id', $request->cabang_id)
             ->where('produk_id', $request->produk_id)
             ->first();
 
-        // Memastikan stok cukup
+        
         if (!$cabangStok || $cabangStok->jumlah < $request->jumlah) {
             return redirect()->back()->with('error', 'Stok tidak cukup untuk produk ini.');
         }
 
-        // Menyimpan transaksi
+        
         Transaksi::create([
             'cabang_id' => $request->cabang_id,
             'user_id' => Auth::id(),
@@ -76,7 +76,7 @@ class TransaksiController extends Controller
             'total_harga' => $total_harga,
         ]);
 
-        // Mengurangi stok di tabel cabang_stok
+        
         $cabangStok->jumlah -= $request->jumlah;
         $cabangStok->save();
 

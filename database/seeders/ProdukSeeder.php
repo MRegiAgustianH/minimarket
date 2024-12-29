@@ -16,38 +16,67 @@ class ProdukSeeder extends Seeder
         //
         $produks = [
             [
-                'nama' => 'Produk A',
-                'deskripsi' => 'Deskripsi untuk Produk A',
-                'harga' => 10000.00,
-                'stok_minimal' => 5,
-            ],
-            [
-                'nama' => 'Produk B',
-                'deskripsi' => 'Deskripsi untuk Produk B',
-                'harga' => 15000.00,
+                'nama' => 'Beras 5kg',
+                'deskripsi' => 'Beras kualitas terbaik 5kg',
+                'harga' => 50000.00,
                 'stok_minimal' => 10,
             ],
             [
-                'nama' => 'Produk C',
-                'deskripsi' => 'Deskripsi untuk Produk C',
-                'harga' => 20000.00,
-                'stok_minimal' => 3,
+                'nama' => 'Minyak Goreng 1L',
+                'deskripsi' => 'Minyak goreng serbaguna 1 liter',
+                'harga' => 15000.00,
+                'stok_minimal' => 20,
             ],
             [
-                'nama' => 'Produk D',
-                'deskripsi' => 'Deskripsi untuk Produk D',
+                'nama' => 'Gula Pasir 1kg',
+                'deskripsi' => 'Gula pasir murni 1kg',
+                'harga' => 12000.00,
+                'stok_minimal' => 15,
+            ],
+            [
+                'nama' => 'Teh Celup',
+                'deskripsi' => 'Teh celup berkualitas, 25 kantong',
+                'harga' => 8000.00,
+                'stok_minimal' => 30,
+            ],
+            [
+                'nama' => 'Kopi Instan',
+                'deskripsi' => 'Kopi instan 100g',
                 'harga' => 25000.00,
-                'stok_minimal' => 8,
+                'stok_minimal' => 25,
             ],
             [
-                'nama' => 'Produk E',
-                'deskripsi' => 'Deskripsi untuk Produk E',
-                'harga' => 30000.00,
-                'stok_minimal' => 2,
+                'nama' => 'Sabun Mandi',
+                'deskripsi' => 'Sabun mandi wangi, 100g',
+                'harga' => 5000.00,
+                'stok_minimal' => 50,
+            ],
+            [
+                'nama' => 'Susu UHT 1L',
+                'deskripsi' => 'Susu UHT 1 liter, kaya nutrisi',
+                'harga' => 20000.00,
+                'stok_minimal' => 15,
+            ],
+            [
+                'nama' => 'Mie Instan',
+                'deskripsi' => 'Mie instan rasa ayam, 5 bungkus',
+                'harga' => 15000.00,
+                'stok_minimal' => 40,
+            ],
+            [
+                'nama' => 'Cokelat Batangan',
+                'deskripsi' => 'Cokelat batangan 100g',
+                'harga' => 10000.00,
+                'stok_minimal' => 20,
+            ],
+            [
+                'nama' => 'Snack Keripik',
+                'deskripsi' => 'Keripik kentang 200g',
+                'harga' => 12000.00,
+                'stok_minimal' => 30,
             ],
         ];
 
-        // Mengisi tabel produk dengan data dummy
         foreach ($produks as $produk) {
             Produk::create($produk);
         }

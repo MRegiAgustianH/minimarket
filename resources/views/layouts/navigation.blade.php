@@ -31,10 +31,10 @@
                     @endhasrole
                     @hasrole('manager')
                     <x-nav-link :href="route('transaksi.index')" :active="request()->routeIs('transaksi.index')">
-                        {{ __('Transaksi') }}
+                        {{ __('Manajemen Transaksi') }}
                     </x-nav-link>
                     <x-nav-link :href="route('cabang.stok')" :active="request()->routeIs('cabang.stok')">
-                        {{ __('Stok') }}
+                        {{ __('Manajemen Stok') }}
                     </x-nav-link>
                     @endhasrole
                     @hasrole('supervisor')

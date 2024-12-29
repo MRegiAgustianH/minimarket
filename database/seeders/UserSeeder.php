@@ -23,16 +23,27 @@ class UserSeeder extends Seeder
         ])->assignRole('owner')->givePermissionTo('edit_cabang','edit_user');
 
         User::factory()->create([
-            'name' => 'ALING',
-            'email' => 'aling@gmail.com',
+            'name' => 'Regi',
+            'email' => 'regi@gmail.com',
         ])->assignRole('manager')
         ->givePermissionTo(['view_transaksi','view_stok']);
 
         User::factory()->create([
-            'name' => 'OKONG',
-            'email' => 'okong@gmail.com',
+            'name' => 'supervisor1',
+            'email' => 'supervisor1@gmail.com',
             'cabang_id' => 1,
         ])->assignRole('supervisor')
         ->givePermissionTo(['view_transaksi']);
+
+        User::factory()->create([
+            'name' => 'kasir',
+            'email' => 'kasir@gmail.com',
+            'cabang_id' => 1,
+        ])->assignRole('kasir');
+
+        User::factory()->create([
+            'name' => 'pegawai',
+            'email' => 'pegawai@gmail.com',
+        ])->assignRole('pegawai');
     }
 }

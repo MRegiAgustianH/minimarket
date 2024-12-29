@@ -20,16 +20,12 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $user = Auth::user(); // Mendapatkan user yang sedang login
-
-    // Memeriksa apakah user memiliki role kasir
-    if ($user->hasRole('kasir')) {
-        // Mengambil stok produk berdasarkan cabang yang dipegang oleh kasir
+    $user = Auth::user(); 
+    if ($user->hasRole('kasir')) { 
         $cabangStoks = CabangStok::with('produk')
-            ->where('cabang_id', $user->cabang_id) // Mengambil stok berdasarkan cabang user
+            ->where('cabang_id', $user->cabang_id) 
             ->get();
     } else {
-        // Jika bukan kasir, ambil semua produk
         $cabangStoks = CabangStok::with('produk')->get();
     }
 
@@ -63,6 +59,8 @@ Route::group(['middleware' => ['role:owner']], function () {
     Route::get('/laporan', [LaporanController::class, 'laporanTransaksi'])->name('laporan.transaksi');
     Route::get('/laporan', [LaporanController::class, 'laporanStok'])->name('laporan.stok');
     Route::get('/laporan/transaksi', [LaporanController::class, 'laporanTransaksi'])->name('laporan.transaksi');
+    Route::get('/laporan/transaksi/transaksiBulanan', [LaporanController::class, 'laporanTransaksi'])->name('transaksi_bulanan');
+    Route::get('/laporan/transaksi/transaksiTahunan', [LaporanController::class, 'laporanTransaksi'])->name('transaksi_tahunan');
     Route::get('/laporan/stok', [LaporanController::class, 'laporanStok'])->name('laporan.stok');
 });
 
@@ -89,12 +87,10 @@ Route::group(['middleware'=> ['role:pegawai']],function(){
     Route::post('/gudang/approve/{id}', [PengadaanStokController::class, 'approve'])->name('gudang.approve');
 });
 
-// Route::get('/gudang/create', [PengadaanStokController::class, 'create'])->name('gudang.create')->middleware('role:manager');
-// Route::post('/gudang', [PengadaanStokController::class, 'store'])->name('gudang.store')->middleware('role:manager');
-
 Route::group(['middleware'=> ['role:manager']],function(){
     Route::get('/gudang/create', [PengadaanStokController::class, 'create'])->name('gudang.create');
     Route::post('/gudang', [PengadaanStokController::class, 'store'])->name('gudang.store');
+    
 });
 
 

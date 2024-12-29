@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
             CabangSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
+            ProdukSeeder::class,
+            CabangStokSeeder::class,
+            
         ]);
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CabangController;
 use App\Http\Controllers\CabangStokController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PengadaanStokController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
@@ -59,7 +60,10 @@ Route::group(['middleware' => ['role:owner']], function () {
     Route::post('/user/create', [UserController::class, 'store'])->name('user.store');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
-    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan', [LaporanController::class, 'laporanTransaksi'])->name('laporan.transaksi');
+    Route::get('/laporan', [LaporanController::class, 'laporanStok'])->name('laporan.stok');
+    Route::get('/laporan/transaksi', [LaporanController::class, 'laporanTransaksi'])->name('laporan.transaksi');
+    Route::get('/laporan/stok', [LaporanController::class, 'laporanStok'])->name('laporan.stok');
 });
 
 Route::group(['middleware'=> ['role:supervisor']],function(){
@@ -81,7 +85,16 @@ Route::group(['middleware' => ['role:supervisor|kasir|manager|owner|pegawai']], 
     
 });
 Route::group(['middleware'=> ['role:pegawai']],function(){
-    Route::get('/gudang',[CabangStokController::class,'index'])->name('gudang.index');
+    Route::get('/gudang',[PengadaanStokController::class,'index'])->name('gudang.index');
+    Route::post('/gudang/approve/{id}', [PengadaanStokController::class, 'approve'])->name('gudang.approve');
+});
+
+// Route::get('/gudang/create', [PengadaanStokController::class, 'create'])->name('gudang.create')->middleware('role:manager');
+// Route::post('/gudang', [PengadaanStokController::class, 'store'])->name('gudang.store')->middleware('role:manager');
+
+Route::group(['middleware'=> ['role:manager']],function(){
+    Route::get('/gudang/create', [PengadaanStokController::class, 'create'])->name('gudang.create');
+    Route::post('/gudang', [PengadaanStokController::class, 'store'])->name('gudang.store');
 });
 
 

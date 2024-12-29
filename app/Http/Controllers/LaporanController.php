@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CabangStok;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
@@ -13,6 +15,36 @@ class LaporanController extends Controller
     {
         //
         return view('laporan.index');
+    }
+
+    public function transaksi(){
+        return view('laporan.transaksi');
+    }
+
+    public function stok(){
+
+        return view('laporan.stok');
+    }
+
+    public function laporanTransaksi(Request $request)
+    {
+        // Mengambil laporan transaksi
+        $transaksis = Transaksi::all();
+        $transaksiHarian = Transaksi::whereDate('created_at', today())->get();
+        $transaksiBulanan = Transaksi::whereMonth('created_at', now()->month)->get();
+        $transaksiTahunan = Transaksi::whereYear('created_at', now()->year)->get();
+
+        return view('laporan.transaksi', compact('transaksiHarian', 'transaksiBulanan', 'transaksiTahunan', 'transaksis'));
+    }
+
+    public function laporanStok(Request $request)
+    {
+        // Mengambil laporan stok
+        $stokHarian = CabangStok::whereDate('updated_at', today())->get();
+        $stokBulanan = CabangStok::whereMonth('updated_at', now()->month)->get();
+        $stokTahunan = CabangStok::whereYear('updated_at', now()->year)->get();
+
+        return view('laporan.stok', compact('stokHarian', 'stokBulanan', 'stokTahunan'));
     }
 
     /**

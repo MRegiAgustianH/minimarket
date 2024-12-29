@@ -22,8 +22,11 @@
                     <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                         {{ __('User') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('laporan.index')" :active="request()->routeIs('laporan.index')">
-                        {{ __('Laporan') }}
+                    <x-nav-link :href="route('laporan.transaksi')" :active="request()->routeIs('laporan.transaksi')">
+                        {{ __('Laporan Transaksi') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('laporan.stok')" :active="request()->routeIs('laporan.stok')">
+                        {{ __('Laporan Stok') }}
                     </x-nav-link>
                     @endhasrole
                     @hasrole('manager')

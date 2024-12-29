@@ -17,8 +17,8 @@
                                 <th scope="col">ID</th>
                                 <th scope="col">Nama Cabang</th>
                                 <th scope="col">Nama Produk</th>
-                                <th scope="col">Harga</th>
-                                <th scope="col">Aksi</th>
+                                <th scope="col">Total Harga</th>
+                                <th scope="col">Tanggal Transaksi</th>
                             </tr>
                         </x-slot>
                         @foreach ($transaksis as $transaksi)
@@ -27,6 +27,7 @@
                             <td>{{$transaksi->cabang->nama}}</td>
                             <td>{{$transaksi->produk->nama}}</td>
                             <td>{{$transaksi->total_harga}}</td>
+                            <td>{{$transaksi->created_at}}</td>
                         </tr>
                         @endforeach
                     </x-table>

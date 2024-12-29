@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('produk_id')->constrained('produks')->onDelete('cascade');
             $table->integer('jumlah')->default(0);
             $table->date('tanggal_pengadaan');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

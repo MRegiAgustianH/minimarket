@@ -2,7 +2,7 @@
 @hasrole('pegawai')
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Pembelian') }}
+            {{ __('Pengadaan Stok') }}
         </h2>
     </x-slot>
 
@@ -14,17 +14,30 @@
                     <x-table>
                         <x-slot name="header">
                             <tr class="py-10">
-                                <th scope="col">Cabang ID</th>
-                                <th scope="col">Nama Produk</th>
-                                <th scope="col">jumlah</th>
-                                <th scope="col">Aksi</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Cabang</th>
+                                <th scope="col">Produk</th>
+                                <th scope="col">Jumlah</th>
+                                <th scope="col">Tanggal Pengadaan</th>
+                                <th scope="col">Status</th> 
                             </tr>
                         </x-slot>
-                        @foreach ($cabangStoks as $cabangs)
+                        @foreach($pengadaanStoks as $pengadaan)
                         <tr>
-                            <td>{{$cabangs->cabang_id}}</td>
-                            <td>{{$cabangs->produk->nama}}</td>
-                            <td>{{$cabangs->jumlah}}</td>
+                            <td>{{ $pengadaan->id }}</td>
+                            <td>{{ $pengadaan->cabang->nama }}</td>
+                            <td>{{ $pengadaan->produk->nama }}</td>
+                            <td>{{ $pengadaan->jumlah }}</td>
+                            <td>{{ $pengadaan->tanggal_pengadaan }}</td>
+                            <td>{{ $pengadaan->status ?? 'pending' }}</td>
+                            <td>
+                                @if(empty($pengadaan->status) || $pengadaan->status == 'pending')
+                                    <form action="{{ route('gudang.approve', $pengadaan->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success">Setujui</button>
+                                    </form>
+                                @endif
+                            </td>
                         </tr>
                         @endforeach
                     </x-table>

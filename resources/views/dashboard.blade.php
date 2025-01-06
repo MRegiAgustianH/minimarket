@@ -30,7 +30,7 @@
                                     @csrf
                                     <input type="hidden" name="cabang_id" value="{{ $cabangs->cabang->id }}">
                                     <input type="hidden" name="produk_id" value="{{ $cabangs->produk->id }}">
-                                    <input type="number" name="jumlah" value="1" min="1" required>
+                                    <input type="number" name="jumlah" value="1" min="1" class="rounded" required>
                                     <x-primary-button type="submit" class="btn btn-primary">Tambah</x-primary-button>
                                 </form>
                             </td>

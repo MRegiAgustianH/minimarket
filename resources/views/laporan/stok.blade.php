@@ -23,7 +23,7 @@
                                 <th scope="col">Cabang</th>
                             </tr>
                         </x-slot>
-                        @foreach ($stokHarian as $stok)
+                        @foreach ($laporanStoks as $stok)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $stok->produk->nama }}</td>

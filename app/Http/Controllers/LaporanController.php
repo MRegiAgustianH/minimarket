@@ -40,12 +40,12 @@ class LaporanController extends Controller
 
     public function laporanStok(Request $request)
     {
-        
+        $laporanStoks = CabangStok::all();
         $stokHarian = CabangStok::whereDate('updated_at', today())->get();
         $stokBulanan = CabangStok::whereMonth('updated_at', now()->month)->get();
         $stokTahunan = CabangStok::whereYear('updated_at', now()->year)->get();
 
-        return view('laporan.stok', compact('stokHarian', 'stokBulanan', 'stokTahunan'));
+        return view('laporan.stok', compact('stokHarian', 'stokBulanan', 'stokTahunan','laporanStoks'));
     }
 
     /**

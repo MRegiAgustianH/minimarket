@@ -18,7 +18,7 @@
                                 <th scope="col">Nama Cabang</th>
                                 <th scope="col">Nama Produk</th>
                                 <th scope="col">Jumlah</th>
-                                <th scope="col">Aksi</th>
+                                
                             </tr>
                         </x-slot>
                         @foreach ($cabangStoks as $cabang)
@@ -27,13 +27,7 @@
                                 <td>{{ $cabang->cabang->nama }}</td>
                                 <td>{{ $cabang->produk->nama }}</td>
                                 <td>{{ $cabang->jumlah }}</td>
-                                <td>
-                                        <form action="{{ route('cabang.destroy', $cabang->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <x-primary-button class="bg-red-500 text-red-600 hover:text-black hover:bg-red-400">Hapus</x-primary-button>
-                                        </form>
-                                </td>
+                        
                             </tr>
                         @endforeach
                     </x-table>

@@ -42,7 +42,7 @@
     @hasrole('supervisor')
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Pembelian') }}
+            {{ __('Data Transaksi di Cabang') }}
         </h2>
     </x-slot>
 
@@ -50,7 +50,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    {{ __("Pembelian") }}
+                <x-primary-button tag="a" href="{{ route('transaksi.export') }}">DOWNLOAD EXCEL</x-primary-button>
                     <x-table>
                         <x-slot name="header">
                             <tr class="py-10">
@@ -58,7 +58,7 @@
                                 <th scope="col">Nama Produk</th>
                                 <th scope="col">Jumlah</th>
                                 <th scope="col">Harga</th>
-                                <th scope="col">Aksi</th>
+                                
                             </tr>
                         </x-slot>
                         @foreach ($transaksis as $transaksi)
@@ -96,6 +96,7 @@
                                 <th scope="col">Nama Produk</th>
                                 <th scope="col">Jumlah</th>
                                 <th scope="col">Harga</th>
+                                <th scope="col">Aksi</th>
                                 
                             </tr>
                         </x-slot>
@@ -105,6 +106,9 @@
                             <td>{{$transaksi->produk->nama}}</td>
                             <td>{{$transaksi->jumlah}}</td>
                             <td>{{$transaksi->total_harga}}</td>
+                            <td>
+                                <x-primary-button tag="a" href="{{ route('transaksi.struk', $transaksi->id) }}">Cetak Struk</x-primary-button>
+                            </td>
                         </tr>
                         @endforeach
                     </x-table>

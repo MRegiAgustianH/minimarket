@@ -38,11 +38,10 @@
                 const cabangSelect = document.getElementById('cabangSelect');
 
                 roleSelect.addEventListener('change', function() {
-                    // Check if the selected role is 'supervisor'
                     if (roleSelect.value === 'supervisor'|| roleSelect.value === 'kasir') {
-                        cabangSelect.style.display = 'block'; // Show Cabang selection
+                        cabangSelect.style.display = 'block'; 
                     } else {
-                        cabangSelect.style.display = 'none'; // Hide Cabang selection
+                        cabangSelect.style.display = 'none'; 
                     }
                 });
             });

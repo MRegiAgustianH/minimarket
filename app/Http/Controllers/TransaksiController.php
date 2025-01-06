@@ -83,6 +83,12 @@ class TransaksiController extends Controller
         return redirect()->back()->with('success', 'Produk berhasil ditambahkan ke transaksi.');
     }
 
+    public function struk($id)
+    {
+        $transaksi = Transaksi::with('produk')->findOrFail($id); 
+        return view('transaksi.struk', compact('transaksi'));
+    }
+
     /**
      * Display the specified resource.
      */

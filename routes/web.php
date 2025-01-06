@@ -14,6 +14,8 @@ use App\Models\User;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Exports\TransaksiExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 Route::get('/', function () {
     return view('welcome');
@@ -74,6 +76,7 @@ Route::group(['middleware'=> ['role:supervisor']],function(){
 Route::group(['middleware'=> ['role:kasir']],function(){
     Route::get('/transaksi',[TransaksiController::class,'index'])->name('transaksi.index');
     Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
+    Route::get('/transaksi/{id}/struk', [TransaksiController::class, 'struk'])->name('transaksi.struk');
 });
 
 Route::group(['middleware' => ['role:supervisor|kasir|manager|owner|pegawai']], function() {
@@ -92,6 +95,10 @@ Route::group(['middleware'=> ['role:manager']],function(){
     Route::post('/gudang', [PengadaanStokController::class, 'store'])->name('gudang.store');
     
 });
+
+Route::get('/transaksi/export', function () {
+    return Excel::download(new TransaksiExport, 'transaksi.xlsx');
+})->name('transaksi.export');
 
 
 

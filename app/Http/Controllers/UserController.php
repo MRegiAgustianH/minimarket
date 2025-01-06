@@ -79,7 +79,7 @@ class UserController extends Controller
 
         $user->assignRole($request->role);
 
-        return redirect()->route('user.index')->with('success', 'User  created successfully.');
+        return redirect()->route('user.create')->with('success', true);
     }
 
     /**
@@ -148,10 +148,8 @@ class UserController extends Controller
     {
         //
         $user = User::findOrFail($id);
+        $user->delete();
 
-    // Menghapus pengguna
-    $user->delete();
-
-    return redirect()->route('user.index')->with('success', 'User  deleted successfully.');
+        return redirect()->route('user.index')->with('success', true);
     }
 }

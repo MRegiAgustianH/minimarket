@@ -53,22 +53,38 @@
                             <x-primary-button class=" text-white px-4 py-2 rounded">Tambah User</x-primary-button>
                         </div>
                     </form>
-                    <div x-data="{ showAlert: @json($errors->has('cabang_id')) }">
-                        <template x-if="showAlert">
-                            <div x-show="showAlert" class="fixed inset-0 flex items-center justify-center z-50">
-                                <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
-                                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                                        {{ __('Cabang ini sudah memiliki ') }}{{$role->name}}
-                                    </h2>
-                                    <div class="mt-6 flex justify-end">
-                                        <x-secondary-button @click="showAlert = false">
-                                            {{ __('Tutup') }}
-                                        </x-secondary-button>
+                        <div x-data="{ showAlert: @json($errors->has('cabang_id')) }">
+                            <template x-if="showAlert">
+                                <div x-show="showAlert" class="fixed inset-0 flex items-center justify-center z-50">
+                                    <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
+                                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                            {{ __('Cabang ini sudah memiliki ') }}{{$role->name}}
+                                        </h2>
+                                        <div class="mt-6 flex justify-end">
+                                            <x-secondary-button @click="showAlert = false">
+                                                {{ __('Tutup') }}
+                                            </x-secondary-button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </template>
-                    </div>
+                            </template>
+                        </div>
+                        <div x-data="{ showSuccessAlert: @json(session('success')) }">
+                            <template x-if="showSuccessAlert">
+                                <div x-show="showSuccessAlert" class="fixed inset-0 flex items-center justify-center z-50">
+                                    <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
+                                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                            {{ __('Data user telah berhasil ditambahkan') }}
+                                        </h2>
+                                        <div class="mt-6 flex justify-end">
+                                            <x-secondary-button @click="showSuccessAlert = false; window.location.href = '{{ route('user.index') }}'">
+                                                {{ __('Tutup') }}
+                                            </x-secondary-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </div>

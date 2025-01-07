@@ -18,7 +18,7 @@ use App\Exports\TransaksiExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {

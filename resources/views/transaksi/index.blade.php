@@ -42,7 +42,7 @@
     @hasrole('supervisor')
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Data Transaksi di Cabang') }}
+        {{ __('Data Transaksi di ') }} {{ Auth::user()->cabang->nama }}
         </h2>
     </x-slot>
 
@@ -50,7 +50,17 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                <x-primary-button tag="a" href="{{ route('transaksi.export') }}">DOWNLOAD EXCEL</x-primary-button>
+                    <form action="{{ route('transaksi.export') }}" method="GET">
+                        <div class="mb-4">
+                            <label for="tanggal" class="block text-sm font-medium text-gray-700">Pilih Tanggal Transaksi</label>
+                            <select name="tanggal" id="tanggal" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                @foreach ($uniqueDates as $date)
+                                    <option value="{{ $date }}">{{ $date }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <x-primary-button type="submit">DOWNLOAD EXCEL</x-primary-button>
+                    </form>
                     <x-table>
                         <x-slot name="header">
                             <tr class="py-10">

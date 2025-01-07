@@ -66,10 +66,17 @@ Route::group(['middleware' => ['role:owner']], function () {
     Route::get('/laporan/stok', [LaporanController::class, 'laporanStok'])->name('laporan.stok');
 });
 
-Route::group(['middleware'=> ['role:supervisor']],function(){
-    Route::get('/cabang/stok',[CabangStokController::class,'index'])->name('cabang.stok');
-    Route::post('/cabang/stok', [CabangStokController::class, 'create'])->name('cabang.stok');
-    Route::get('/transaksi',[TransaksiController::class,'index'])->name('transaksi.index');
+Route::group(['middleware' => ['role:supervisor']], function () {
+    Route::prefix('cabang/stok')->group(function () {
+        Route::get('/', [CabangStokController::class, 'index'])->name('cabang.stok.index'); 
+        Route::post('/', [CabangStokController::class, 'create'])->name('cabang.stok.create'); 
+        Route::get('/export',[CabangStokController::class, 'export'])->name('cabang.stok.export');
+    });
+    Route::prefix('transaksi')->group(function () {
+        Route::get('/', [TransaksiController::class, 'index'])->name('transaksi.index'); 
+        Route::get('/export', [TransaksiController::class, 'export'])->name('transaksi.export'); 
+    });
+
 });
 
 
@@ -96,9 +103,6 @@ Route::group(['middleware'=> ['role:manager']],function(){
     
 });
 
-Route::get('/transaksi/export', function () {
-    return Excel::download(new TransaksiExport, 'transaksi.xlsx');
-})->name('transaksi.export');
 
 
 

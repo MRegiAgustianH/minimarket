@@ -26,13 +26,6 @@ class PengadaanStokController extends Controller
     public function create(Request $request)
     {
         
-        // $cabangId = $request->input('cabang_id');
-        // $produkId = $request->input('produk_id');
-
-        // $cabangs = Cabang::find($cabangId);
-        // $produks = Produk::find($produkId);
-
-        // $cabangStoks = CabangStok::all();
         $cabangs = Cabang::all();
         $produks = Produk::all();
 
@@ -52,7 +45,6 @@ class PengadaanStokController extends Controller
             'tanggal_pengadaan' => 'required|date',
         ]);
 
-        // Menyimpan pengadaan stok
         PengadaanStok::create([
             'cabang_id' => $request->cabang_id,
             'produk_id' => $request->produk_id,
@@ -67,7 +59,6 @@ class PengadaanStokController extends Controller
 
         $pengadaan = PengadaanStok::findOrFail($id);
 
-        // Menambahkan stok di tabel cabang_stok
         $cabangStok = CabangStok::where('cabang_id', $pengadaan->cabang_id)
             ->where('produk_id', $pengadaan->produk_id)
             ->first();
@@ -77,8 +68,7 @@ class PengadaanStokController extends Controller
             $cabangStok->save();
         }
 
-        // Mengupdate status pengadaan (jika ada kolom status)
-        $pengadaan->status = 'approved'; // Anda bisa menambahkan kolom status di migration
+        $pengadaan->status = 'approved'; 
         $pengadaan->save();
 
         return redirect()->back()->with('success', 'Pengadaan stok berhasil disetujui.');

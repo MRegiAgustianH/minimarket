@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TransaksiExport;
 use App\Models\CabangStok;
 use App\Models\Produk;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TransaksiController extends Controller
 {
@@ -19,13 +21,18 @@ class TransaksiController extends Controller
         $user = Auth::user(); 
         if ($user->hasRole('supervisor')) {
             $transaksis = Transaksi::where('cabang_id', $user->cabang_id)->get();
+            $uniqueDates = Transaksi::where('cabang_id', $user->cabang_id)
+            ->selectRaw('DATE(created_at) as date')
+            ->groupBy('date')
+            ->pluck('date');
         } elseif ($user->hasRole('kasir')) {
             $transaksis = Transaksi::where('cabang_id', $user->cabang_id)->get();
         } else {
             $transaksis = Transaksi::all();
+            $uniqueDates = null;
         }
 
-        return view('transaksi.index', ['transaksis' => $transaksis]);
+        return view('transaksi.index', compact('transaksis', 'uniqueDates'));
     }
 
     /**
@@ -87,6 +94,27 @@ class TransaksiController extends Controller
     {
         $transaksi = Transaksi::with('produk')->findOrFail($id); 
         return view('transaksi.struk', compact('transaksi'));
+    }
+
+    public function export(Request $request)
+    {
+        $user = Auth::user();
+        $tanggal = $request->input('tanggal');
+
+        if ($user->hasRole('supervisor')) {
+            $transaksis = Transaksi::where('cabang_id', $user->cabang_id)
+                ->whereDate('created_at', $tanggal)
+                ->get();
+        } elseif ($user->hasRole('kasir')) {
+            $transaksis = Transaksi::where('cabang_id', $user->cabang_id)
+                ->whereDate('created_at', $tanggal)
+                ->get();
+        } else {
+            $transaksis = Transaksi::whereDate('created_at', $tanggal)->get();
+        }
+
+        
+        return Excel::download(new TransaksiExport($transaksis), 'transaksi_' . $tanggal . '.xlsx');
     }
 
     /**

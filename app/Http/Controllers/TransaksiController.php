@@ -27,6 +27,7 @@ class TransaksiController extends Controller
             ->pluck('date');
         } elseif ($user->hasRole('kasir')) {
             $transaksis = Transaksi::where('cabang_id', $user->cabang_id)->get();
+            $uniqueDates = null;
         } else {
             $transaksis = Transaksi::all();
             $uniqueDates = null;
